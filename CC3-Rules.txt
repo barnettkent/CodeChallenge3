@@ -1,0 +1,127 @@
+Who Moved My Cheese?
+
+STORY
+
+You're a lab rat in a maze. Would you be able to find your cheese? 
+
+What if you were also being pursued by, hypothetically, scientists who somehow managed to shrink themselves when performing an experiment that has gone awry and need to capture you in order to get back to normal size through some overly-convuluted reversal of the experiment in which you make up a key component? 
+
+Hypothetically, mind you.
+
+Well, it turns out that the usual lab scientists managed to shrink themselves when performing an experiment, and in order to get back to normal size, they need to reverse the polarity of the...
+
+Oh. Right. Sorry. You're a rat. A super intelligent lab rat, but a rat nonetheless. The important thing is that they need to capture you to get back to normal.
+
+Of course, all you care about is the cheese. Ok, think you can outrun the scientists? 
+
+You're about to find out.
+
+But first, you need some practice time in the Nakatomi Cheese Maze Simulator.
+
+
+THE CHALLENGE DESCRIPTION
+
+Each challenge consists of a configuration file in YAML format (See http://yaml.org/ for libraries in your favorite language) which defines the dimensions of the maze and describes the entities inside of it, including you, represented as "P" for Player.
+
+Your job: load up the maze and entities as specified, then run a simulation of it to determine if you can safely get to the cheese or if you'll be captured first.
+
+
+MAZES:
+
+Mazes are tile-based. Each tile is 9 units x 9 units and can only be one of two types: Walls and Spaces. 
+
+Mazes are defined with W to represent a Wall tile and numbers to represent the number of Space tiles. That is:
+
+- [W,3,W,2,W]
+
+The above is the following row of tiles: WALL, SPACE, SPACE, SPACE, WALL, SPACE, SPACE, WALL
+
+And it's also 8*9 = 72 units wide and 9 units tall, but I'm sure you knew that already.
+
+ENTITIES:
+
+Each entity has some basic configurations:
+- a two-dimensional position in the maze (no climbing over walls!)
+- a direction (up, down, right, and left only)
+- an ID that represents its code name. These codenames are a single letter. It's way cooler that way. Trust me.
+
+Entities are located in the maze by their cool codename. Here's an example:
+
+Maze:
+   - [W,W,W]
+   - [W,G,W]
+   - [W,1,W]
+   - [W,1,W]
+   - [W,P,W]
+   - [W,1,W]
+   - [W,A,W]
+   - [W,W,W]
+
+If you were paying attention, you'd see a vertical corridor with three entities. G is located two tiles to the right and two tiles down. Since each tile is 9 units x 9 units, and we'll assume G is in the center of the tile, that means G's position is (13, 13) in this maze. Using the same idea, P is located at (13, 40) and A is located at (13, 58). 
+
+MOVEMENT:
+
+That's great, but how do you move in the maze? 
+
+Movement is limited. You can only move forward and never backwards. You can turn at the center of intersections, so if you are going up and want to go down, you need to turn at two intersections to do so. 
+
+In the Nakatomi Cheese Maze Simulator, we'll be running updates. Each update "tick", entities will move according to the direction each is facing and its speed.
+
+Speed? Oh, yeah. 
+
+Entities have a few optional stats as well. Entities have a speed which indicates how many units they can move through the maze at once. So an entity at position 31, 31 moving to the right at 3 units would show up at 34, 31 in one tick. By default, an entity is stationary. 
+
+TARGETS AND BEHAVIORS
+
+Entities can also have targets and behavioral preferences, which dictate where an entity wants to go.
+
+A target is another entity. 
+
+For example, you're P (RIGHT? Didn't I say it was cool?), and you're going after G. We could say it stands for the goal, but let's say it stands for gruyère.
+
+You're facing right, and your speed is 9. 
+
+And here's your contrived example maze:
+
+Maze:
+   - [W,W,W,W,W,W,W]
+   - [W,W,1,G,1,W]
+   - [W,W,W,1,W,1,W]
+   - [W,P,4,W]
+   - [W,W,W,1,W,1,W]
+   - [W,W,W,3,W]
+   - [W,W,W,W,W,W,W]
+
+When you make it to the center of the tile to your right, you have a decision to make. Do you continue moving to the right, or do you go up? 
+
+Your behavioral preferences will tell you. 
+
+Some lab rats prefer moving vertically through the maze. If such a rat is moving to the right and the target isn't right in front of them, it will prefer turning left or right, depending on which direction would take it closer to its goal. So P would turn left to go after G.
+
+Some lab rats prefer moving horizontally through the maze, meaning that if the target isn't right in front of them, they always prefer to face left or right. In this case, P would want to continue moving to the right, even though it is the long way around the walls to G. Hey, whatever floats a rat's boat.
+
+And some rats are a bit more discerning. They'll make turning decisions based on how much closer they are to their goals. So with this nearest direction behavior preference, P would continue forward because G is closer horizontally(only 1 tile away) than it is horizontally (2 tiles away).
+
+The configuration will tell you what preferences an entity will have.
+
+END CONDITIONS
+
+You win if you can get P to the same tile that the gruyère occupies. If you do, have your simulator output: "PLAYER FOUND THE CHEESE!"
+
+But what about the other entities? 
+
+They're governed by the same movement rules as P, and they win if one of them occupies the same tile as their individual targets.  If they do, have your simulator output: "THE PLAYER DID NOT FIND THE CHEESE!"
+
+So that's it. For each challenge you just load the configuration, run the simulation, and return one of the two outputs. 
+
+I bet that a lab rat like you will find this challenge to be a piece of cake. Er, cheese.
+
+
+Move Cheese 2: Cheese Harder
+
+Move Cheese with a Vengeance
+
+Live Free or Move Cheese
+
+A Good Day to Move Cheese
+

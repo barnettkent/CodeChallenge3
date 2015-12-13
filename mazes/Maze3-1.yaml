@@ -1,0 +1,21 @@
+---
+# MAZE 3: part 1
+# Move Cheese 2: Cheese Harder
+Maze:
+   - [W,W,W,W,W,W,W,W,W,W,W]
+   - [W,G,3,W,4,W]
+   - [W,1,W,W,1,W,1,W,W,1,W]
+   - [W,1,W,W,1,W,1,W,W,1,W]
+   - [W,3,A,1,B,3,W]
+   - [W,1,W,W,1,W,1,W,W,1,W]
+   - [W,4,W,4,W]
+   - [W,1,W,W,W,W,W,W,W,1,W]
+   - [W,8,P,W]
+   - [W,W,W,W,W,W,W,W,W,W,W]
+
+Entities:
+   - {id: A, speed: 3, target: P, preferences: [HORIZONTAL_PREFERENCE]}
+   - {id: B, speed: 3, target: P, preferences: [VERTICAL_PREFERENCE]}
+   - {id: P, speed: 1, target: G, preferences: [HORIZONTAL_PREFERENCE]}
+
+

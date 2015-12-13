@@ -1,0 +1,17 @@
+---
+# Tutorial Maze 1
+# The cheese? It's right there. Just walk up to it.
+# HINT: You should easily find the cheese in this one.
+
+Maze:
+   - [W,W,W]
+   - [W,G,W]
+   - [W,1,W]
+   - [W,1,W]
+   - [W,1,W]
+   - [W,1,W]
+   - [W,P,W]
+   - [W,W,W]
+
+Entities:
+   - {id: P, speed: 1, target: G, preferences: [VERTICAL_PREFERENCE]}

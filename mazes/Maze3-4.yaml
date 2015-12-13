@@ -1,0 +1,15 @@
+---
+# MAZE 3: part 4
+# Move Cheese 2: Cheese Harder
+# Someone summoned a bull of a scientist who will triple in speed if he sees you!
+# By the way, he sees you if he has line of sight (no walls in between you and him).
+Maze:
+   - [W,W,W,W,W,W,W,W,W,W]
+   - [W,8,W]
+   - [W,1,W,W,W,1,W,W,1,W]
+   - [W,G,W,W,W,P,W,W,A,W]
+   - [W,W,W,W,W,W,W,W,W,W]
+
+Entities:
+   - {id: A, speed: 1, target: P, preferences: [HORIZONTAL_PREFERENCE, LOS_SPEED_X_3]}
+   - {id: P, speed: 1, target: G, preferences: [NEAREST_DIRECTION_PREFERENCE]}

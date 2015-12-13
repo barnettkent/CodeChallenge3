@@ -1,0 +1,19 @@
+---
+# Another Tutorial Maze 
+# A Good Day to Move Cheese
+# Keep going forward. This is not the season to turn, turn, turn. 
+
+Maze:
+   - [W,W,W,W,W,W]
+   - [W,1,1,1,1,W]
+   - [W,1,W,W,1,W]
+   - [W,G,W,W,1,W]
+   - [W,W,W,W,1,W]
+   - [W,1,1,1,1,W]
+   - [W,P,W,1,W,W]
+   - [W,A,1,1,W,W]
+   - [W,W,W,W,W,W]
+
+Entities:
+   - {id: P, speed: 1, target: G, preferences: [VERTICAL_PREFERENCE]}
+   - {id: A, speed: 0, target: P, preferences: [HORIZONTAL_PREFERENCE]}

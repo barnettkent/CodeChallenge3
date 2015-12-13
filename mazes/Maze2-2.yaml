@@ -1,0 +1,18 @@
+---
+# MAZE 2: part 2
+# Who Moved My Cheese?
+Maze:
+   - [W,W,W,W,W]
+   - [W,1,G,1,W]
+   - [W,1,W,1,W]
+   - [W,3,W]
+   - [W,1,W,1,W]
+   - [W,A,2,W]
+   - [W,1,W,1,W]
+   - [W,3,W]
+   - [W,W,P,W,W]
+   - [W,W,W,W,W]
+
+Entities:
+   - {id: P, speed: 9, target: G, preferences: [NEAREST_DIRECTION_PREFERENCE]}
+   - {id: A, speed: 9, target: P, preferences: [VERTICAL_PREFERENCE]}

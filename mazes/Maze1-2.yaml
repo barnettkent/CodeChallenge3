@@ -1,0 +1,14 @@
+---
+# Tutorial Maze 2
+# If you do this right, it likely ends well. 
+# If you do this wrong, it doesn't likely end.
+
+Maze:
+   - [W,W,W,W,W,W,W]
+   - [W,5,W]
+   - [W,P,W,1,W,1,W]
+   - [W,3,W,G,W]
+   - [W,W,W,W,W,W,W]
+
+Entities:
+   - {id: P, speed: 1, target: G, preferences: [HORIZONTAL_PREFERENCE]}

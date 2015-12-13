@@ -1,0 +1,19 @@
+# MAZE 1: part 3
+# Who Moved My Cheese?
+# Wait, the cheese is actually moving?!
+# Hurry, but don't be reckless!
+Maze:
+   - [W,W,W,W,W]
+   - [W,3,W]
+   - [W,G,W,1,W]
+   - [W,3,W]
+   - [W,1,W,A,W]
+   - [W,3,W]
+   - [W,W,P,W,W]
+   - [W,W,W,W,Z]
+
+Entities:
+   - {id: G, speed: 1, target: Z, preferences: [NEAREST_DIRECTION_PREFERENCE]}
+   - {id: P, speed: 3, target: G, preferences: [NEAREST_DIRECTION_PREFERENCE]}
+   - {id: A, speed: 3, target: P, preferences: [VERTICAL_PREFERENCE]}
+

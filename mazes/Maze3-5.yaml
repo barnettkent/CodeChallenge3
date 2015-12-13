@@ -1,0 +1,25 @@
+---
+# MAZE 3: part 5
+# Move Cheese 2: Cheese Harder
+# You're surrounded! 
+# Or are you?
+Maze:
+   - [W,W,W,W,W,W,W,W,W,W,W]
+   - [W,9,W]
+   - [W,1,W,1,W,A,W,1,W,1,W]
+   - [W,3,W,1,W,3,W]
+   - [W,1,W,W,W,1,W,W,W,1,W]
+   - [W,1,B,2,P,T,1,C,G,W]
+   - [W,1,W,W,W,1,W,W,W,1,W]
+   - [W,3,W,1,W,3,W]
+   - [W,1,W,1,W,D,W,1,W,1,W]
+   - [W,7,T,1,W]
+   - [W,W,W,W,W,W,W,W,W,W,W]
+
+
+Entities:
+   - {id: A, speed: 1, target: P, direction: DOWN, preferences: [NEAREST_DIRECTION_PREFERENCE]}
+   - {id: B, speed: 1, target: P, direction: RIGHT, preferences: [NEAREST_DIRECTION_PREFERENCE]}
+   - {id: C, speed: 1, target: P, direction: LEFT, preferences: [NEAREST_DIRECTION_PREFERENCE]}
+   - {id: D, speed: 1, target: P, direction: UP, preferences: [NEAREST_DIRECTION_PREFERENCE]}
+   - {id: P, speed: 1, target: G, direction: RIGHT, preferences: [NEAREST_DIRECTION_PREFERENCE, LOS_SPEED_X_3]}

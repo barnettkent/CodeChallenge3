@@ -1,0 +1,16 @@
+---
+# Another Tutorial Maze 
+# Move Cheese with a Vengeance
+# You should find the cheese in this maze.
+
+Maze:
+   - [W,W,W,W,W,W,W]
+   - [W,3,G,W,W]
+   - [W,A,W,1,W,W,W]
+   - [W,5,W]
+   - [W,W,W,W,W,P,W]
+   - [W,W,W,W,W,W,W]
+
+Entities:
+   - {id: P, speed: 1, target: G, preferences: [HORIZONTAL_PREFERENCE]}
+   - {id: A, speed: 0, target: P, preferences: [HORIZONTAL_PREFERENCE]}

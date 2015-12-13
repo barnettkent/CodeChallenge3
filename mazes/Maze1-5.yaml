@@ -1,0 +1,26 @@
+---
+# Tutorial Maze 5
+# Talk about close calls!
+# No, seriously. Talk about them.
+
+Maze:
+   - [W,W,W,W,W,W,W,W,W,W,W]
+   - [W,W,W,W,W,W,G,W,W,W,W]
+   - [W,9,W]
+   - [W,1,W,W,W,W,1,W,W,W,W]
+   - [W,1,W,W,W,W,1,W,W,W,W]
+   - [W,1,W,7,W]
+   - [W,1,W,1,W,W,1,W,W,1,W]
+   - [W,1,W,A,W,W,1,W,W,B,W]
+   - [W,1,W,1,W,W,1,W,W,1,W]
+   - [W,1,W,1,W,W,P,W,W,1,W]
+   - [W,1,W,1,W,W,W,W,W,1,W]
+   - [W,1,W,1,W,W,W,W,W,1,W]
+   - [W,C,W,1,W,W,W,W,W,1,W]
+   - [W,W,W,W,W,W,W,W,W,W,W]
+
+Entities:
+   - {id: P, speed: 1, target: G, preferences: [HORIZONTAL_PREFERENCE]}
+   - {id: A, speed: 1, target: P, preferences: [HORIZONTAL_PREFERENCE]}
+   - {id: B, speed: 1, target: P, preferences: [HORIZONTAL_PREFERENCE]}
+   - {id: C, speed: 3, target: P, preferences: [HORIZONTAL_PREFERENCE]}
