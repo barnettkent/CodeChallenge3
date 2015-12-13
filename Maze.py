@@ -52,7 +52,6 @@ class Maze(object):
             target = Entity()
             target.id = 'Z'
             target.position = self.mazeTiles.FindEntityPositionFromTiles(target.id)
-            print("Z id: {} pos: {} speed: {}".format(target.id, target.position, target.speed))
             entities.append(target)
 
         return entities
@@ -63,7 +62,7 @@ class Maze(object):
         for row in range(self.mazeTiles.rows):
             for col in range(self.mazeTiles.cols):
                 if self.mazeTiles.GetTileValue(row, col) == id:
-                    position = self.mazeTiles.CalcStartPostionFromTile(row, col)
+                    position = self.mazeTiles.GetTileCenterPosition(row, col)
                     break
 
         return position
@@ -74,7 +73,7 @@ class Maze(object):
         for row in range(self.mazeTiles.rows):
             for col in range(self.mazeTiles.cols):
                 if self.mazeTiles.GetTileValue(row, col) == 'T':
-                    teleporterPositions.append(self.mazeTiles.CalcStartPostionFromTile(row, col))
+                    teleporterPositions.append(self.mazeTiles.GetTileCenterPosition(row, col))
 
         return teleporterPositions
 
@@ -83,17 +82,15 @@ class Maze(object):
         self.tick = 0
 
         while not self.isFinished:
-            if self.tick % 3 == 0:
+            if self.tick % 1 == 0:
                 self._displayTiles()
-                # self._displayEntityDirections()
-                # self._displayEntityPositions()
             self._runTickUpdate()
 
     def _runTickUpdate(self):
         if self.tick > 0:
             self._decideEntityDirections()
         self._updateEntityPositions()
-        self.isFinished = self._checkIfFinished(self.entities, self.mazeTiles)
+        self.isFinished = self._checkIfFinished()
         self.mazeTiles.Update(self.entities)
         self.tick += 1
 
@@ -114,38 +111,35 @@ class Maze(object):
     def _decideDirectionForSingleEntity(self, entity):
         resultDirection = entity.direction
 
-        if entity.speed != 0:
-            if self.mazeTiles.IsPositionInTileCenter(entity.position):
+        if entity.speed != 0 and self.mazeTiles.IsPositionInTileCenter(entity.position):
 
-                possibleDirections = self.mazeTiles.GetPossibleDirections(entity)
-                oppositeDirection = self._getOppositeDirection(entity.direction)
+            possibleDirections = self.mazeTiles.GetPossibleDirections(entity)
+            oppositeDirection = self._getOppositeDirection(entity.direction)
 
-                availableDirections = [dir for dir in possibleDirections if dir != oppositeDirection]
-                directionScores = {key: 0 for key in availableDirections}
+            availableDirections = [dir for dir in possibleDirections if dir != oppositeDirection]
+            directionScores = {key: 0 for key in availableDirections}
 
-                directionScores = self._scoreInLineEntities(entity, directionScores)
+            directionScores = self._scoreInLineEntities(entity, directionScores)
 
-                for dir in directionScores.keys():
-                    if not self.mazeTiles.DirectionIsAwayFromTarget(dir, entity, self._findTargetFor(entity)):
-                        directionScores[dir] += 9
+            for dir in directionScores.keys():
+                if not self.mazeTiles.DirectionIsAwayFromTarget(dir, entity, self._findTargetFor(entity)):
+                    directionScores[dir] += 9
 
-                directionScores = self._scoreDirectionPreferences(entity, directionScores)
-                directionScores = self._scoreCurrentDirection(entity, directionScores)
+            directionScores = self._scoreDirectionPreferences(entity, directionScores)
+            directionScores = self._scoreCurrentDirection(entity, directionScores)
 
-                if 'LEFT' in directionScores.keys() and 'RIGHT' in directionScores.keys() and \
-                    directionScores['LEFT'] == directionScores['RIGHT']:
-                    directionScores['RIGHT'] += 1
+            if 'LEFT' in directionScores.keys() and 'RIGHT' in directionScores.keys() and \
+                directionScores['LEFT'] == directionScores['RIGHT']:
+                directionScores['RIGHT'] += 1
 
-                # print ("Entity: {} Scores: {}".format(entity.id, directionScores))
+            # Find the highest score
+            direction = availableDirections[0]
 
-                # Find the highest score
-                direction = availableDirections[0]
+            for dir, score in directionScores.iteritems():
+                if score > directionScores[direction]:
+                    direction = dir
 
-                for dir, score in directionScores.iteritems():
-                    if score > directionScores[direction]:
-                        direction = dir
-
-                resultDirection = direction
+            resultDirection = direction
 
         return resultDirection
 
@@ -283,13 +277,12 @@ class Maze(object):
             elif entity.direction == 'RIGHT':
                 newPosition[0] = entity.position[0] + (entity.speed * speedMultiplier)
 
-            newPosition = self.mazeTiles.BoundsCheckPosition(newPosition)
             self.entities[i].position = newPosition
 
-    def _checkIfFinished(self, entities, tiles):
+    def _checkIfFinished(self):
         finished = False
 
-        for entity in entities:
+        for entity in self.entities:
             target = self._findTargetFor(entity)
 
             if target != None:
@@ -302,13 +295,13 @@ class Maze(object):
                     if entity.id == 'P':
                         print("PLAYER FOUND THE CHEESE!")
                     else:
-                        print("THE PLAYER DID NOT FIND THE CHEESE!")
+                        print("PLAYER DOES NOT FIND THE CHEESE!")
 
         return finished
 
     def _displayTiles(self):
-        print("")
         self.mazeTiles.DisplayTiles(self.teleporterPositions)
+        print("")
 
     def _displayEntityDirections(self):
         for entity in self.entities:

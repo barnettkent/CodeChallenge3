@@ -60,10 +60,7 @@ class MazeTiles(object):
 
         return row, col
 
-    def CalcStartPostionFromTile(self, row, col):
-        x = 0
-        y = 0
-
+    def GetTileCenterPosition(self, row, col):
         x = (col * self.tileWidth) + self.tileWidth / 2
         y = (row * self.tileHeight) + self.tileHeight / 2
 
@@ -96,7 +93,6 @@ class MazeTiles(object):
             distance = abs(yDistance)
 
         return distance
-
 
     def GetNearestDirectionToTarget(self, entity, target):
         entityRow, entityCol = self.ConvertPositionToTile(entity.position)
@@ -223,24 +219,7 @@ class MazeTiles(object):
                     col = j
                     break
 
-        return self.CalcStartPostionFromTile(row, col)
-
-    def BoundsCheckPosition(self, position):
-        maxWidth = (self.cols + 1) * self.tileWidth
-        maxHeight = (self.rows + 1) * self.tileHeight
-
-        checkedPosition = position
-
-        if position[0] < 0:
-            checkedPosition[0] = 0
-        if position[0] > maxWidth:
-            checkedPosition[0] = maxWidth
-        if position[1] < 0:
-            checkedPosition[1] = 0
-        if position[1] > maxHeight:
-            checkedPosition[1] = maxHeight
-
-        return checkedPosition
+        return self.GetTileCenterPosition(row, col)
 
     def Update(self, entities):
         for i in range(self.rows):
@@ -257,14 +236,13 @@ class MazeTiles(object):
                 self.tiles[newRow][newCol] = entity.id
 
     def DisplayTiles(self, teleporterPositions):
-        for row in range(len(self.tiles)):
+        for row in range(self.rows):
             rowString = ""
-            for col in range(len(self.tiles[row])):
+            for col in range(self.cols):
                 teleporterHere = False
-                thisPosition = self.CalcStartPostionFromTile(row, col)
+                thisPosition = self.GetTileCenterPosition(row, col)
 
                 for T in teleporterPositions:
-
                     if T[0] == thisPosition[0] and \
                        T[1] == thisPosition[1]:
                        teleporterHere = True
@@ -274,4 +252,5 @@ class MazeTiles(object):
                     rowString += 'T'
                 else:
                     rowString += str(self.tiles[row][col])
+
             print(rowString)
